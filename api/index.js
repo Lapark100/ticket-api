@@ -12,6 +12,17 @@ const pool = new Pool({
 
 // Create a new ticket entry
 export default async function handler(req, res) {
+    // Set CORS headers
+    res.setHeader('Access-Control-Allow-Origin', '*'); // Adjust to your allowed origin(s) if needed
+    res.setHeader('Access-Control-Allow-Methods', 'POST, GET, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+    if (req.method === 'OPTIONS') {
+        // Handle preflight requests
+        res.status(204).end();
+        return;
+    }
+
     if (req.method === 'POST') {
         const { studentTickets, parentTickets, tableTickets, studentNames, parentNames, total } = req.body;
         try {
